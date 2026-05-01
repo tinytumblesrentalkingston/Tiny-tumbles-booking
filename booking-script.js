@@ -1,31 +1,101 @@
 // Initialize EmailJS with your public key
 emailjs.init('TuYoYTO_a2mtWCbtV');
 
-// Castle data
+// Castle data with detailed specifications
 const castles = {
     'yard-bounce': {
         name: 'Yard Bounce and Slide',
         price: 60,
         deposit: 50,
-        rules: 'No food, paint, sharp objects, drinks. Socks must be worn at all times.'
+        dimensions: "13' x 13' x 9'H",
+        ageRange: '3-12 years',
+        weightLimit: '300 lbs total',
+        capacity: '4-6 kids',
+        rules: 'No food, paint, sharp objects, drinks. Socks must be worn at all times.',
+        features: [
+            'Large bouncing area',
+            'Fun slide',
+            'Safety netting',
+            'Vibrant colors',
+            'Easy entry/exit'
+        ],
+        setupRequirements: [
+            'Flat, level surface',
+            'Access to electrical outlet (within 50 feet)',
+            'Minimum 15\' x 15\' space',
+            'Clear overhead space (no trees/wires)'
+        ]
     },
     'umblair': {
         name: 'Umblair - Climber and Slide',
         price: 85,
         deposit: 50,
-        rules: 'No food, paint, sharp objects, drinks. Socks must be worn at all times.'
+        dimensions: "15' x 12' x 10'H",
+        ageRange: '3-14 years',
+        weightLimit: '400 lbs total',
+        capacity: '6-8 kids',
+        rules: 'No food, paint, sharp objects, drinks. Socks must be worn at all times.',
+        features: [
+            'Climbing wall',
+            'Double slide',
+            'Large bounce area',
+            'Basketball hoop',
+            'Obstacle course elements'
+        ],
+        setupRequirements: [
+            'Flat, level surface',
+            'Access to electrical outlet (within 50 feet)',
+            'Minimum 17\' x 14\' space',
+            'Clear overhead space (no trees/wires)'
+        ]
     },
     'banzai': {
         name: 'Banzai Bounce and Slide',
         price: 75,
         deposit: 50,
-        rules: 'No food, paint, sharp objects, drinks. Socks must be worn at all times.'
+        dimensions: "14' x 11' x 9'H",
+        ageRange: '3-12 years',
+        weightLimit: '350 lbs total',
+        capacity: '5-7 kids',
+        rules: 'No food, paint, sharp objects, drinks. Socks must be worn at all times.',
+        features: [
+            'Bounce area',
+            'Slide',
+            'Climbing section',
+            'Colorful design',
+            'Safety mesh walls'
+        ],
+        setupRequirements: [
+            'Flat, level surface',
+            'Access to electrical outlet (within 50 feet)',
+            'Minimum 16\' x 13\' space',
+            'Clear overhead space (no trees/wires)'
+        ]
     },
     'water-slide': {
         name: 'Water Slide and Climber with Pool',
         price: 120,
         deposit: 75,
-        rules: 'Water slide - standard safety rules apply.'
+        dimensions: "18' x 14' x 12'H",
+        ageRange: '5-14 years',
+        weightLimit: '500 lbs total',
+        capacity: '6-10 kids',
+        rules: 'Water slide - swimwear required. Adult supervision mandatory. No diving.',
+        features: [
+            'Large water slide',
+            'Splash pool',
+            'Climbing wall',
+            'Water sprayers',
+            'Perfect for hot days'
+        ],
+        setupRequirements: [
+            'Flat, level surface',
+            'Access to water source (garden hose)',
+            'Access to electrical outlet (within 50 feet)',
+            'Minimum 20\' x 16\' space',
+            'Clear overhead space (no trees/wires)',
+            'Drainage area for water'
+        ]
     }
 };
 
@@ -622,11 +692,74 @@ function closeModal() {
     document.getElementById('successModal').classList.remove('show');
 }
 
+// Show detailed castle information
+function showCastleInfo(castleId) {
+    const castle = castles[castleId];
+    const content = document.getElementById('castleInfoContent');
+    
+    content.innerHTML = `
+        <h2>${castle.name}</h2>
+        <img src="images/${castleId}.jpg" alt="${castle.name}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; margin: 20px 0;">
+        
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #667eea; margin-top: 0;">📋 Specifications</h3>
+            <p><strong>📏 Dimensions:</strong> ${castle.dimensions}</p>
+            <p><strong>👶 Age Range:</strong> ${castle.ageRange}</p>
+            <p><strong>⚖️ Weight Limit:</strong> ${castle.weightLimit}</p>
+            <p><strong>👥 Capacity:</strong> ${castle.capacity}</p>
+            <p><strong>💰 Price:</strong> $${castle.price}/day</p>
+            <p><strong>🔒 Safety Deposit:</strong> $${castle.deposit}</p>
+        </div>
+        
+        <div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #856404; margin-top: 0;">✨ Features</h3>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                ${castle.features.map(feature => `<li>${feature}</li>`).join('')}
+            </ul>
+        </div>
+        
+        <div style="background: #d4edda; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #155724; margin-top: 0;">🔧 Setup Requirements</h3>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                ${castle.setupRequirements.map(req => `<li>${req}</li>`).join('')}
+            </ul>
+        </div>
+        
+        <div style="background: #f8d7da; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #721c24; margin-top: 0;">⚠️ Safety Rules</h3>
+            <p>${castle.rules}</p>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Adult supervision required at all times</li>
+                <li>Remove shoes, glasses, and sharp objects</li>
+                <li>No flips or rough play</li>
+                <li>Follow capacity limits strictly</li>
+                <li>Do not use in high winds or rain</li>
+            </ul>
+        </div>
+        
+        <button onclick="closeInfoModal()" style="width: 100%; padding: 15px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; margin-top: 20px;">
+            Close
+        </button>
+    `;
+    
+    document.getElementById('infoModal').classList.add('show');
+}
+
+// Close info modal
+function closeInfoModal() {
+    document.getElementById('infoModal').classList.remove('show');
+}
+
 // Close modal when clicking outside
 window.onclick = function(event) {
-    const modal = document.getElementById('successModal');
-    if (event.target === modal) {
+    const successModal = document.getElementById('successModal');
+    const infoModal = document.getElementById('infoModal');
+    
+    if (event.target === successModal) {
         closeModal();
+    }
+    if (event.target === infoModal) {
+        closeInfoModal();
     }
 }
 

@@ -101,9 +101,38 @@ h2 {
     padding-top: 20px;
 }
 
-.castle-card .select-btn {
-    margin: 20px 25px 25px 25px;
+.castle-details {
+    padding: 15px 25px;
+    background: #f8f9fa;
+    margin: 15px 0;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.castle-details p {
+    margin: 8px 0;
+    color: #555;
+}
+
+.castle-details strong {
+    color: #667eea;
+}
+
+.castle-card .select-btn,
+.castle-card .info-btn {
+    margin: 10px 25px;
     width: calc(100% - 50px);
+}
+
+.castle-card .info-btn {
+    background: #28a745;
+    font-size: 0.9em;
+    padding: 10px;
+}
+
+.castle-card .info-btn:hover {
+    background: #218838;
 }
 
 .castle-card:hover {
@@ -511,6 +540,27 @@ h2 {
 
 .modal-content button:hover {
     background: #764ba2;
+}
+
+.info-modal {
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #000;
 }
 
 /* Footer */

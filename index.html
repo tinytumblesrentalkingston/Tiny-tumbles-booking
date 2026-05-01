@@ -26,7 +26,14 @@
                         <h3>🎪 Yard Bounce and Slide</h3>
                         <p class="price">$60/day</p>
                         <p class="deposit">Safety Deposit: $50</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 13' x 13' x 9'H</p>
+                            <p><strong>👶 Age Range:</strong> 3-12 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 300 lbs total</p>
+                            <p><strong>👥 Capacity:</strong> 4-6 kids</p>
+                        </div>
                         <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('yard-bounce')">More Info</button>
                     </div>
                     <div class="castle-card" data-castle="umblair" data-price="85" data-deposit="50">
                         <div class="castle-image">
@@ -35,7 +42,14 @@
                         <h3>🏔️ Umblair - Climber and Slide</h3>
                         <p class="price">$85/day</p>
                         <p class="deposit">Safety Deposit: $50</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 15' x 12' x 10'H</p>
+                            <p><strong>👶 Age Range:</strong> 3-14 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 400 lbs total</p>
+                            <p><strong>👥 Capacity:</strong> 6-8 kids</p>
+                        </div>
                         <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('umblair')">More Info</button>
                     </div>
                     <div class="castle-card" data-castle="banzai" data-price="75" data-deposit="50">
                         <div class="castle-image">
@@ -44,7 +58,14 @@
                         <h3>🌊 Banzai Bounce and Slide</h3>
                         <p class="price">$75/day</p>
                         <p class="deposit">Safety Deposit: $50</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 14' x 11' x 9'H</p>
+                            <p><strong>👶 Age Range:</strong> 3-12 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 350 lbs total</p>
+                            <p><strong>👥 Capacity:</strong> 5-7 kids</p>
+                        </div>
                         <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('banzai')">More Info</button>
                     </div>
                     <div class="castle-card" data-castle="water-slide" data-price="120" data-deposit="75">
                         <div class="castle-image">
@@ -53,7 +74,14 @@
                         <h3>💦 Water Slide and Climber with Pool</h3>
                         <p class="price">$120/day</p>
                         <p class="deposit">Safety Deposit: $75</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 18' x 14' x 12'H</p>
+                            <p><strong>👶 Age Range:</strong> 5-14 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 500 lbs total</p>
+                            <p><strong>👥 Capacity:</strong> 6-10 kids</p>
+                        </div>
                         <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('water-slide')">More Info</button>
                     </div>
                 </div>
             </section>
@@ -234,6 +262,14 @@
                 <li>Payment instructions</li>
             </ul>
             <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Castle Info Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content info-modal">
+            <span class="close-btn" onclick="closeInfoModal()">&times;</span>
+            <div id="castleInfoContent"></div>
         </div>
     </div>
 
