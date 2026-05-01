@@ -496,7 +496,7 @@ async function sendEmails(formData) {
     };
     
     // Send customer email
-    await emailjs.send('service_hsngr17', 'template_cshl8lk', customerParams);
+    await emailjs.send('service_hsngr17', 'template_uh9ko9p', customerParams);
     
     // Send business notification email
     await emailjs.send('service_hsngr17', 'template_cshl8lk', businessParams);
