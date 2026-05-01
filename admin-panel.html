@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tumbles - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        select, input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input[type="date"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .btn-block {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-unblock {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-view {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .btn-clear {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #output {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            min-height: 150px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 20px;
+        }
+
+        .success {
+            background: #48bb78;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .error {
+            background: #f56565;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .info-box {
+            background: #bee3f8;
+            border-left: 4px solid #3182ce;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .info-box strong {
+            color: #2c5282;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .quick-action-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-action-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .quick-action-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .quick-action-card p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .link-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .link-section a {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .link-section a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏰 Tiny Tumbles Admin Panel</h1>
+        <p class="subtitle">Manage Castle Bookings & Availability</p>
+
+        <div class="info-box">
+            <strong>📍 Important:</strong> This admin panel manages the same bookings as your main booking page. Changes here will appear on the customer booking calendar immediately after saving.
+        </div>
+
+        <!-- Block Date Section -->
+        <div class="section">
+            <h2>🚫 Block a Date</h2>
+            <div class="form-group">
+                <label for="blockCastle">Select Castle:</label>
+                <select id="blockCastle">
+                    <option value="yard-bounce">Yard Bounce and Slide ($60/day)</option>
+                    <option value="umblair">Umblair - Climber and Slide ($85/day)</option>
+                    <option value="banzai">Banzai Bounce and Slide ($75/day)</option>
+                    <option value="water-slide">Water Slide and Climber with Pool ($120/day)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="blockDate">Select Date:</label>
+                <input type="date" id="blockDate">
+            </div>
+            <button class="btn-block" onclick="blockDate()">🚫 Block This Date</button>
+        </div>
+
+        <!-- Unblock Date Section -->
+        <div class="section">
+            <h2>✅ Unblock a Date</h2>
+            <div class="form-group">
+                <label for="unblockCastle">Select Castle:</label>
+                <select id="unblockCastle">
+                    <option value="yard-bounce">Yard Bounce and Slide</option>
+                    <option value="umblair">Umblair - Climber and Slide</option>
+                    <option value="banzai">Banzai Bounce and Slide</option>
+                    <option value="water-slide">Water Slide and Climber with Pool</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="unblockDate">Select Date:</label>
+                <input type="date" id="unblockDate">
+            </div>
+            <button class="btn-unblock" onclick="unblockDate()">✅ Unblock This Date</button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section">
+            <h2>⚡ Quick Actions</h2>
+            <div class="quick-actions">
+                <div class="quick-action-card" onclick="blockWeekend()">
+                    <h3>🗓️ Block Weekend</h3>
+                    <p>Block next Saturday & Sunday for selected castle</p>
+                </div>
+                <div class="quick-action-card" onclick="blockWeek()">
+                    <h3>📅 Block Whole Week</h3>
+                    <p>Block 7 consecutive days for selected castle</p>
+                </div>
+                <div class="quick-action-card" onclick="blockAllCastles()">
+                    <h3>🏰 Block All Castles</h3>
+                    <p>Block all castles for one date (maintenance)</p>
+                </div>
+                <div class="quick-action-card" onclick="blockHolidays()">
+                    <h3>🎉 Block Holidays</h3>
+                    <p>Block major holidays for all castles</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- View & Manage -->
+        <div class="section">
+            <h2>👁️ View & Manage Bookings</h2>
+            <div class="button-group">
+                <button class="btn-view" onclick="viewBookings()">👁️ View All Bookings</button>
+                <button class="btn-view" onclick="viewByMonth()">📅 View This Month</button>
+                <button class="btn-view" onclick="exportBookings()">💾 Export Bookings</button>
+                <button class="btn-clear" onclick="clearAllBookings()">🗑️ Clear All Bookings</button>
+            </div>
+        </div>
+
+        <!-- Output Console -->
+        <div class="section">
+            <h2>📊 Output Console</h2>
+            <div id="output">Ready to manage bookings...</div>
+        </div>
+
+        <div id="successMsg" class="success"></div>
+        <div id="errorMsg" class="error"></div>
+
+        <div class="link-section">
+            <a href="index.html" target="_blank">🔗 Open Customer Booking Page</a>
+        </div>
+    </div>
+
+    <script>
+        // Set default dates to today
+        document.getElementById('blockDate').valueAsDate = new Date();
+        document.getElementById('unblockDate').valueAsDate = new Date();
+
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            output.textContent += `\n[${timestamp}] ${prefix} ${message}`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function showSuccess(message) {
+            const el = document.getElementById('successMsg');
+            el.textContent = '✅ ' + message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+
+        function showError(message) {
+            const el = document.getElementById('errorMsg');
+            el.textContent = '❌ ' + message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+
+        function getBookings() {
+            return JSON.parse(localStorage.getItem('castleBookings')) || {};
+        }
+
+        function saveBookings(bookings) {
+            localStorage.setItem('castleBookings', JSON.stringify(bookings));
+        }
+
+        function blockDate() {
+            const castle = document.getElementById('blockCastle').value;
+            const date = document.getElementById('blockDate').value;
+            
+            if (!date) {
+                showError('Please select a date');
+                log('Error: No date selected', 'error');
+                return;
+            }
+
+            const bookings = getBookings();
+            if (!bookings[castle]) bookings[castle] = [];
+            
+            if (bookings[castle].includes(date)) {
+                showError('This date is already blocked');
+                log(`Date ${date} is already blocked for ${castle}`, 'error');
+                return;
+            }
+
+            bookings[castle].push(date);
+            saveBookings(bookings);
+            
+            showSuccess(`Blocked ${date} for ${castle}`);
+            log(`Successfully blocked ${date} for ${castle}`, 'success');
+        }
+
+        function unblockDate() {
+            const castle = document.getElementById('unblockCastle').value;
+            const date = document.getElementById('unblockDate').value;
+            
+            if (!date) {
+                showError('Please select a date');
+                log('Error: No date selected', 'error');
+                return;
+            }
+
+            const bookings = getBookings();
+            
+            if (!bookings[castle] || !bookings[castle].includes(date)) {
+                showError('This date is not blocked');
+                log(`Date ${date} is not blocked for ${castle}`, 'error');
+                return;
+            }
+
+            bookings[castle] = bookings[castle].filter(d => d !== date);
+            saveBookings(bookings);
+            
+            showSuccess(`Unblocked ${date} for ${castle}`);
+            log(`Successfully unblocked ${date} for ${castle}`, 'success');
+        }
+
+        function blockWeekend() {
+            const castle = document.getElementById('blockCastle').value;
+            const today = new Date();
+            const daysUntilSaturday = (6 - today.getDay() + 7) % 7;
+            const saturday = new Date(today);
+            saturday.setDate(today.getDate() + daysUntilSaturday);
+            const sunday = new Date(saturday);
+            sunday.setDate(saturday.getDate() + 1);
+
+            const bookings = getBookings();
+            if (!bookings[castle]) bookings[castle] = [];
+
+            const satDate = saturday.toISOString().split('T')[0];
+            const sunDate = sunday.toISOString().split('T')[0];
+
+            if (!bookings[castle].includes(satDate)) bookings[castle].push(satDate);
+            if (!bookings[castle].includes(sunDate)) bookings[castle].push(sunDate);
+
+            saveBookings(bookings);
+            showSuccess(`Blocked weekend (${satDate} & ${sunDate}) for ${castle}`);
+            log(`Blocked weekend for ${castle}`, 'success');
+        }
+
+        function blockWeek() {
+            const castle = document.getElementById('blockCastle').value;
+            const startDate = new Date(document.getElementById('blockDate').value);
+            
+            if (!document.getElementById('blockDate').value) {
+                showError('Please select a start date first');
+                return;
+            }
+
+            const bookings = getBookings();
+            if (!bookings[castle]) bookings[castle] = [];
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                const dateStr = date.toISOString().split('T')[0];
+                if (!bookings[castle].includes(dateStr)) {
+                    bookings[castle].push(dateStr);
+                }
+            }
+
+            saveBookings(bookings);
+            showSuccess(`Blocked 7 days starting ${startDate.toISOString().split('T')[0]} for ${castle}`);
+            log(`Blocked week for ${castle}`, 'success');
+        }
+
+        function blockAllCastles() {
+            const date = document.getElementById('blockDate').value;
+            
+            if (!date) {
+                showError('Please select a date first');
+                return;
+            }
+
+            const bookings = getBookings();
+            const castles = ['yard-bounce', 'umblair', 'banzai', 'water-slide'];
+
+            castles.forEach(castle => {
+                if (!bookings[castle]) bookings[castle] = [];
+                if (!bookings[castle].includes(date)) {
+                    bookings[castle].push(date);
+                }
+            });
+
+            saveBookings(bookings);
+            showSuccess(`Blocked ${date} for ALL castles`);
+            log(`Blocked all castles for ${date}`, 'success');
+        }
+
+        function blockHolidays() {
+            const year = new Date().getFullYear();
+            const holidays = [
+                `${year}-12-24`, // Christmas Eve
+                `${year}-12-25`, // Christmas
+                `${year}-12-26`, // Boxing Day
+                `${year}-12-31`, // New Year's Eve
+                `${year + 1}-01-01`, // New Year's Day
+            ];
+
+            const bookings = getBookings();
+            const castles = ['yard-bounce', 'umblair', 'banzai', 'water-slide'];
+
+            castles.forEach(castle => {
+                if (!bookings[castle]) bookings[castle] = [];
+                holidays.forEach(date => {
+                    if (!bookings[castle].includes(date)) {
+                        bookings[castle].push(date);
+                    }
+                });
+            });
+
+            saveBookings(bookings);
+            showSuccess('Blocked major holidays for all castles');
+            log('Blocked holidays: ' + holidays.join(', '), 'success');
+        }
+
+        function viewBookings() {
+            const bookings = getBookings();
+            const output = document.getElementById('output');
+            
+            if (Object.keys(bookings).length === 0) {
+                output.textContent = '📭 No bookings found. All dates are available!';
+                return;
+            }
+
+            output.textContent = '📋 CURRENT BOOKINGS:\n\n';
+            
+            const castleNames = {
+                'yard-bounce': 'Yard Bounce and Slide',
+                'umblair': 'Umblair - Climber and Slide',
+                'banzai': 'Banzai Bounce and Slide',
+                'water-slide': 'Water Slide and Climber with Pool'
+            };
+
+            for (const [castle, dates] of Object.entries(bookings)) {
+                if (dates.length > 0) {
+                    output.textContent += `\n🏰 ${castleNames[castle]}:\n`;
+                    dates.sort().forEach(date => {
+                        output.textContent += `   📅 ${date}\n`;
+                    });
+                }
+            }
+
+            log('Displayed all bookings', 'success');
+        }
+
+        function viewByMonth() {
+            const bookings = getBookings();
+            const output = document.getElementById('output');
+            const today = new Date();
+            const currentMonth = today.toISOString().slice(0, 7);
+
+            output.textContent = `📅 BOOKINGS FOR ${currentMonth}:\n\n`;
+
+            const castleNames = {
+                'yard-bounce': 'Yard Bounce and Slide',
+                'umblair': 'Umblair - Climber and Slide',
+                'banzai': 'Banzai Bounce and Slide',
+                'water-slide': 'Water Slide and Climber with Pool'
+            };
+
+            let found = false;
+            for (const [castle, dates] of Object.entries(bookings)) {
+                const monthDates = dates.filter(d => d.startsWith(currentMonth));
+                if (monthDates.length > 0) {
+                    found = true;
+                    output.textContent += `\n🏰 ${castleNames[castle]}:\n`;
+                    monthDates.sort().forEach(date => {
+                        output.textContent += `   📅 ${date}\n`;
+                    });
+                }
+            }
+
+            if (!found) {
+                output.textContent += '\n✅ No bookings this month!';
+            }
+
+            log('Displayed current month bookings', 'success');
+        }
+
+        function exportBookings() {
+            const bookings = getBookings();
+            const dataStr = JSON.stringify(bookings, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `tiny-tumbles-bookings-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showSuccess('Bookings exported successfully!');
+            log('Exported bookings to JSON file', 'success');
+        }
+
+        function clearAllBookings() {
+            if (confirm('⚠️ Are you sure you want to clear ALL bookings? This cannot be undone!')) {
+                if (confirm('⚠️ FINAL WARNING: This will delete all blocked dates. Continue?')) {
+                    localStorage.removeItem('castleBookings');
+                    document.getElementById('output').textContent = '🗑️ All bookings cleared!';
+                    showSuccess('All bookings have been cleared');
+                    log('Cleared all bookings', 'success');
+                }
+            }
+        }
+
+        // Initial load
+        log('Admin panel loaded successfully');
+        log('Ready to manage castle bookings');
+    </script>
+</body>
+</html>
