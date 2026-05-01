@@ -1,81 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tiny Tumbles Booking</title>
-
-  <!-- Flatpickr CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-    }
-
-    input, select {
-      padding: 6px;
-      font-size: 14px;
-      width: 200px;
-    }
-
-    /* 🔽 Smaller Calendar */
-    .flatpickr-calendar {
-      transform: scale(0.8);
-      transform-origin: top left;
-    }
-
-    .flatpickr-day {
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Tumbles Castle Rentals - Booking System</title>
+    <link rel="stylesheet" href="booking-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>🏰 Tiny Tumbles Castle Rentals</h1>
+            <p>Book Your Perfect Bounce Castle Today!</p>
+        </header>
 
-  <h2>Tiny Tumbles Booking</h2>
+        <main>
+            <!-- Castle Selection Section -->
+            <section class="castle-selection">
+                <h2>Select Your Castle</h2>
+                <div class="castle-grid">
+                    <div class="castle-card" data-castle="yard-bounce" data-price="60" data-deposit="50">
+                        <div class="castle-image">
+                            <img src="images/yard-bounce.jpg" alt="Yard Bounce and Slide" onerror="this.src='https://via.placeholder.com/300x200?text=Yard+Bounce+and+Slide'">
+                        </div>
+                        <h3>🎪 Yard Bounce and Slide</h3>
+                        <p class="price">$60/day</p>
+                        <p class="deposit">Safety Deposit: $50</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 12'W x 9'D x 8'H</p>
+                            <p><strong>👶 Age Range:</strong> 3-7 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 100 kilos total</p>
+                            <p><strong>👥 Capacity:</strong> 3-4 kids</p>
+                        </div>
+                        <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('yard-bounce')">More Info</button>
+                    </div>
+                    <div class="castle-card" data-castle="umblair" data-price="85" data-deposit="50">
+                        <div class="castle-image">
+                            <img src="images/umblair.jpg" alt="Umblair - Climber and Slide" onerror="this.src='https://via.placeholder.com/300x200?text=Umblair+Climber+and+Slide'">
+                        </div>
+                        <h3>🏔️ Umblair - Climber and Slide</h3>
+                        <p class="price">$85/day</p>
+                        <p class="deposit">Safety Deposit: $50</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 10'W x 10'D x 8'H</p>
+                            <p><strong>👶 Age Range:</strong> 3-7 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 100 kilos total</p>
+                            <p><strong>👥 Capacity:</strong> 3-4 kids</p>
+                        </div>
+                        <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('umblair')">More Info</button>
+                    </div>
+                    <div class="castle-card" data-castle="banzai" data-price="75" data-deposit="50">
+                        <div class="castle-image">
+                            <img src="images/banzai.jpg" alt="Banzai Bounce and Slide" onerror="this.src='https://via.placeholder.com/300x200?text=Banzai+Bounce+and+Slide'">
+                        </div>
+                        <h3>🌊 Banzai Bounce and Slide</h3>
+                        <p class="price">$75/day</p>
+                        <p class="deposit">Safety Deposit: $50</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 9'W x 13.3'D x 8'H</p>
+                            <p><strong>👶 Age Range:</strong> 3-12 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 100 kilos total</p>
+                            <p><strong>👥 Capacity:</strong> 4-5 kids</p>
+                        </div>
+                        <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('banzai')">More Info</button>
+                    </div>
+                    <div class="castle-card" data-castle="water-slide" data-price="120" data-deposit="75">
+                        <div class="castle-image">
+                            <img src="images/water-slide.jpg" alt="Water Slide and Climber with Pool" onerror="this.src='https://via.placeholder.com/300x200?text=Water+Slide+with+Pool'">
+                        </div>
+                        <h3>💦 Water Slide and Climber with Pool</h3>
+                        <p class="price">$120/day</p>
+                        <p class="deposit">Safety Deposit: $75</p>
+                        <div class="castle-details">
+                            <p><strong>📏 Dimensions:</strong> 9.6'W x 12'D x 8'H</p>
+                            <p><strong>👶 Age Range:</strong> 5-12 years</p>
+                            <p><strong>⚖️ Weight Limit:</strong> 100 kilos total</p>
+                            <p><strong>👥 Capacity:</strong> 4-5 kids</p>
+                        </div>
+                        <button class="select-btn">Select</button>
+                        <button class="info-btn" onclick="showCastleInfo('water-slide')">More Info</button>
+                    </div>
+                </div>
+            </section>
 
-  <label for="date">Select Date:</label>
-  <input type="text" id="date">
+            <!-- Calendar Section -->
+            <section class="calendar-section">
+                <h2>Check Availability</h2>
+                <div class="calendar-controls">
+                    <button id="prevMonth">← Previous</button>
+                    <h3 id="currentMonth"></h3>
+                    <button id="nextMonth">Next →</button>
+                </div>
+                <div id="calendar"></div>
+                <div class="legend">
+                    <span><span class="legend-box available"></span> Available</span>
+                    <span><span class="legend-box booked"></span> Booked</span>
+                    <span><span class="legend-box selected"></span> Selected</span>
+                </div>
+            </section>
 
-  <label for="time">Select Time:</label>
-  <select id="time">
-    <option>10:00 AM</option>
-    <option>12:00 PM</option>
-    <option>2:00 PM</option>
-  </select>
+            <!-- Booking Form Section -->
+            <section class="booking-form-section">
+                <h2>Booking Details</h2>
+                <form id="bookingForm">
+                    <input type="hidden" id="selectedCastle" name="selectedCastle">
+                    <input type="hidden" id="selectedDate" name="selectedDate">
+                    <input type="hidden" id="rentalPrice" name="rentalPrice">
+                    <input type="hidden" id="depositAmount" name="depositAmount">
 
-  <br><br>
-  <button onclick="submitBooking()">Book Now</button>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerName">Full Name *</label>
+                            <input type="text" id="customerName" name="customerName" required>
+                        </div>
 
-  <!-- Flatpickr JS -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
 
-  <script>
-    // Initialize calendar
-    flatpickr("#date", {
-      minDate: "today",
-      dateFormat: "Y-m-d"
-    });
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
 
-    function submitBooking() {
-      const date = document.getElementById("date").value;
-      const time = document.getElementById("time").value;
+                    <div class="form-group">
+                        <label for="location">Event Location Address *</label>
+                        <input type="text" id="location" name="location" required placeholder="Full address including postal code">
+                    </div>
 
-      if (!date) {
-        alert("Please select a date");
-        return;
-      }
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="setupTime">Set Up Time *</label>
+                            <input type="time" id="setupTime" name="setupTime" required>
+                        </div>
 
-      alert(`Booking confirmed for ${date} at ${time}`);
-    }
-  </script>
+                        <div class="form-group">
+                            <label for="teardownTime">Tear Down Time *</label>
+                            <input type="time" id="teardownTime" name="teardownTime" required>
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="locationSelect">Select Your Area *</label>
+                        <select id="locationSelect" name="locationSelect" required>
+                            <option value="">-- Select Location --</option>
+                            <optgroup label="Kingston (Free Delivery)">
+                                <option value="kingston" data-distance="0">Kingston</option>
+                            </optgroup>
+                            <optgroup label="Nearby Areas ($20 Flat Fee)">
+                                <option value="amherstview" data-distance="10">Amherstview (10 km)</option>
+                                <option value="odessa" data-distance="15">Odessa (15 km)</option>
+                                <option value="sydenham" data-distance="18">Sydenham (18 km)</option>
+                                <option value="yarker" data-distance="20">Yarker (20 km)</option>
+                            </optgroup>
+                            <optgroup label="Other Areas (Distance-Based Fee)">
+                                <option value="napanee" data-distance="30">Napanee (30 km)</option>
+                                <option value="gananoque" data-distance="25">Gananoque (25 km)</option>
+                                <option value="sharbot-lake" data-distance="45">Sharbot Lake (45 km)</option>
+                                <option value="custom" data-distance="0">Other Location (Enter Distance)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="customDistanceGroup" style="display: none;">
+                        <label for="customDistance">Enter Distance from Kingston (km) *</label>
+                        <input type="number" id="customDistance" name="customDistance" min="0" step="0.1">
+                        <small>Approximate distance from Kingston city center</small>
+                    </div>
+
+                    <div class="delivery-fee-info">
+                        <p><strong>Delivery Fee:</strong> <span id="deliveryFee">$0.00</span></p>
+                        <div id="deliveryFeeBreakdown"></div>
+                        <small>
+                            <strong>Fee Structure:</strong><br>
+                            • Kingston: FREE<br>
+                            • Up to 20 km: $20 flat fee<br>
+                            • Over 20 km: $20 + $1.50 per additional km
+                        </small>
+                    </div>
+
+                    <div class="cost-summary">
+                        <h3>Cost Summary</h3>
+                        <div class="summary-row">
+                            <span>Rental Fee:</span>
+                            <span id="summaryRental">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Safety Deposit:</span>
+                            <span id="summaryDeposit">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee:</span>
+                            <span id="summaryDelivery">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Due at Setup:</span>
+                            <span id="summaryTotal">$0.00</span>
+                        </div>
+                        <div class="summary-row deposit-note">
+                            <small>*Safety deposit to be paid separately to: tinytumblesrental@gmail.com</small>
+                        </div>
+                    </div>
+
+                    <!-- Safety Rules and Policies -->
+                    <div class="policies-section">
+                        <h3>Safety Rules & Policies</h3>
+                        <div class="policy-box">
+                            <h4>Important Rules:</h4>
+                            <ul>
+                                <li>Deposit cannot be used towards rental</li>
+                                <li>Rental amount due at the time of set up</li>
+                                <li>Safety of kids is parents' responsibility</li>
+                                <li>Parents should ensure the rules are followed</li>
+                                <li id="castleSpecificRules">For non-water slides: No food, paint, sharp objects, drinks. Socks must be worn at all times.</li>
+                            </ul>
+                        </div>
+
+                        <div class="policy-box">
+                            <h4>Cancellation Policy:</h4>
+                            <p>Cancellations are only accepted due to weather conditions. Upon mutual agreement, the deposit will be refunded fully.</p>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="agreeTerms" required>
+                                I have read and agree to the safety rules and cancellation policy *
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="agreeWaiver" required>
+                                I agree to sign the liability waiver (will be sent via email) *
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Complete Booking</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 Tiny Tumbles Castle Rentals | Contact: tinytumblesrental@gmail.com</p>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2>🎉 Booking Confirmed!</h2>
+            <p>Thank you for your booking. You will receive:</p>
+            <ul>
+                <li>Booking confirmation email</li>
+                <li>Contract waiver to sign and return</li>
+                <li>Payment instructions</li>
+            </ul>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Castle Info Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content info-modal">
+            <span class="close-btn" onclick="closeInfoModal()">&times;</span>
+            <div id="castleInfoContent"></div>
+        </div>
+    </div>
+
+    <script src="booking-script.js"></script>
 </body>
 </html>
